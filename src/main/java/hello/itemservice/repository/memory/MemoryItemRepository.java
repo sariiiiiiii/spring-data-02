@@ -2,7 +2,7 @@ package hello.itemservice.repository.memory;
 
 import hello.itemservice.domain.Item;
 import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.ItemSearchCond;
+import hello.itemservice.repository.ItemSearchCondition;
 import hello.itemservice.repository.ItemUpdateDto;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
@@ -37,7 +37,7 @@ public class MemoryItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAll(ItemSearchCond cond) {
+    public List<Item> findAll(ItemSearchCondition cond) {
         String itemName = cond.getItemName();
         Integer maxPrice = cond.getMaxPrice();
         return store.values().stream()

@@ -3,7 +3,7 @@ package hello.itemservice.repository;
 import lombok.Data;
 
 @Data
-public class ItemUpdateDto {
+public class ItemSearchCondition {
 
     /**
      * ItemSearchCondition, ItemUpdateDto 는 Service, Repository에서 사용을 한다
@@ -14,15 +14,13 @@ public class ItemUpdateDto {
      */
 
     private String itemName;
-    private Integer price;
-    private Integer quantity;
+    private Integer maxPrice;
 
-    public ItemUpdateDto() {
+    public ItemSearchCondition() {
     }
 
-    public ItemUpdateDto(String itemName, Integer price, Integer quantity) {
+    public ItemSearchCondition(String itemName, Integer maxPrice) {
         this.itemName = itemName;
-        this.price = price;
-        this.quantity = quantity;
+        this.maxPrice = maxPrice;
     }
 }

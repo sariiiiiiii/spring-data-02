@@ -1,7 +1,7 @@
 package hello.itemservice.domain;
 
 import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.ItemSearchCond;
+import hello.itemservice.repository.ItemSearchCondition;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,9 +16,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class ItemRepositoryTest {
 
+    /**
+     * 구현체를 테스트 하는것이 아니라 인터페이스를 테스트 하고 있다
+     * 장점은 향후에 구현체를 수정하게 됐을 때 해당 구현체가 잘 동작하는지 같은 테스트로 편리하게 할 수 있다
+     */
     @Autowired
     ItemRepository itemRepository;
 
+    /**
+     * AfterEach :
+     * 테스트 구동 시 다른 테스트에 영향을 주지 않도록 clearStore()를 통해 다음 테스트에 영향을 주지 않기 하기 위함.
+     */
     @AfterEach
     void afterEach() {
         //MemoryItemRepository 의 경우 제한적으로 사용
@@ -86,7 +94,7 @@ class ItemRepositoryTest {
     }
 
     void test(String itemName, Integer maxPrice, Item... items) {
-        List<Item> result = itemRepository.findAll(new ItemSearchCond(itemName, maxPrice));
-        assertThat(result).containsExactly(items);
+        List<Item> result = itemRepository.findAll(new ItemSearchCondition(itemName, maxPrice));
+        assertThat(result).containsExactly(items); // containsExactly 는 순서까지 맞아야 됨
     }
 }
