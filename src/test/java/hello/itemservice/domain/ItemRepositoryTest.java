@@ -8,11 +8,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @SpringBootTest
 class ItemRepositoryTest {
 
@@ -20,6 +24,14 @@ class ItemRepositoryTest {
      * 구현체를 테스트 하는것이 아니라 인터페이스를 테스트 하고 있다
      * 장점은 향후에 구현체를 수정하게 됐을 때 해당 구현체가 잘 동작하는지 같은 테스트로 편리하게 할 수 있다
      */
+
+    /**
+     * @Transactional의 원리
+     * 스프링이 제공하는 @Transactional 어노테이션은 로직이 성공적으로 수행되면 커밋되도록 동작한다
+     * 그런데 @Transactional 어노테이션을 테스트에서 사용하면 아주 특별하게 동작한다
+     * @Transactional이 테스트에 있으면 스프링은 테스트를 트랜잭션 안에서 실행하고, 테스트가 끝나면 트랜잭션을 자동으로 롤백시켜 버린다
+     */
+
     @Autowired
     ItemRepository itemRepository;
 
@@ -35,7 +47,17 @@ class ItemRepositoryTest {
         }
     }
 
+    /**
+     * @Commit
+     * @Rollback(value = false)
+     * 그래도 첫 테스트시에는 DB에 데이터가 진짜 들어가는지 확인을 해야 할때가 있다
+     * 그럴때는 @Transactional 범위 안에서 @Commit, @Rollback(value = false) 를 하면
+     * 테스트에서 트랜잭션이 끝날 때 자동 롤백되는것을 방지할 수 있다
+     */
     @Test
+//    @Commit
+//    @Rollback(value = false)
+//    @Transactional
     void save() {
         //given
         Item item = new Item("itemA", 10000, 10);
