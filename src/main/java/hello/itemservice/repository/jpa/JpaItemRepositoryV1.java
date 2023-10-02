@@ -17,11 +17,19 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @Transactional
-public class JpaItemRepository implements ItemRepository {
+public class JpaItemRepositoryV1 implements ItemRepository {
+
+    /**
+     * @Repository 어노테이션이 붙은 클래스는 컴포넌트 대상이 되는것과 동시에 하나의 기능이 더 붙는다
+     * 1. 컴포넌트 스캔의 대상이 된다
+     * 2. 예외 변환 AOP의 적용 대상이 된다
+     *    - 스프링과 JPA를 함께 사용하는 경우 스프링은 JPA 예외 변환기 (PersistenceExceptionTranslator)를 등록한다
+     *    - 예외 변환 AOP 프록시는 JPA 관련 예외가 발생하면 JPA 예외 변환기를 통해 발한 예외를 스프링 데이터 접근 예외로 변환한다
+     */
 
     private final EntityManager em;
 
-    public JpaItemRepository(EntityManager em) {
+    public JpaItemRepositoryV1(EntityManager em) {
         this.em = em;
     }
 
