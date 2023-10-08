@@ -12,9 +12,9 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Transactional
 @Repository
+@Transactional
+@RequiredArgsConstructor
 public class JpaItemRepositoryV2 implements ItemRepository {
 
     private final SpringDataItemRepository repository;
